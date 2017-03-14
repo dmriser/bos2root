@@ -1,0 +1,8 @@
+# IGNORE THINGS 
+
+*.o 
+*.txt 
+*.root 
+*.a
+*.so 
+*~ 
