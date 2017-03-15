@@ -1,5 +1,5 @@
-#ifndef h22Event_h
-#define h22Event_h
+#ifndef ntuple_h
+#define nutple_h
 
 
 // -----------------
@@ -21,13 +21,13 @@ extern "C"{
 #include <TChain.h>
 #include <TFile.h>
 
-class h22Event {
+class NTupleStructure {
 public :
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
 
    // Declaration of leaf types
-   Int_t          evntid;
-   UChar_t         ihel;
+   Int_t           evntid;
+   Int_t           ihel;
    Float_t         q_l;
    Float_t         tr_time;
    Int_t           gpart;
@@ -38,26 +38,26 @@ public :
    Float_t         cy[40];   //[gpart]
    Float_t         cz[40];   //[gpart]
    Float_t         vz[40];   //[gpart]
-   Int_t         dc_sect[40];   //[gpart]
+   Int_t           dc_sect[40];   //[gpart]
    Float_t         tl1_cx[40];   //[gpart]
    Float_t         tl1_cy[40];   //[gpart]
-   Int_t         ec_sect[40];   //[gpart]
+   Int_t           ec_sect[40];   //[gpart]
    Float_t         ec_r[40];   //[gpart]
    Float_t         ec_t[40];   //[gpart]
    Float_t         ec_ei[40];   //[gpart]
    Float_t         ec_eo[40];   //[gpart]
    Float_t         etot[40];   //[gpart]
-   Int_t         cc_sect[40];   //[gpart]
+   Int_t           cc_sect[40];   //[gpart]
    Float_t         cc_r[40];   //[gpart]
    Float_t         cc_t[40];   //[gpart]
-   Int_t        nphe[40];   //[gpart]
+   Int_t           nphe[40];   //[gpart]
    Float_t         cc_c2[40];   //[gpart]
-   Int_t         sc_sect[40];   //[gpart]
+   Int_t           sc_sect[40];   //[gpart]
    Float_t         sc_r[40];   //[gpart]
    Float_t         sc_t[40];   //[gpart]
    Float_t         edep[40];   //[gpart]
-   Int_t         sc_pd[40];   //[gpart]
-   Int_t        cc_segm[40];   //[gpart]
+   Int_t           sc_pd[40];   //[gpart]
+   Int_t           cc_segm[40];   //[gpart]
    Float_t         ech_x[40];   //[gpart]
    Float_t         ech_y[40];   //[gpart]
    Float_t         ech_z[40];   //[gpart]
@@ -88,7 +88,7 @@ public :
    Float_t         Rpart12[20];   //[nprt]
    Int_t           Ipart13[20];   //[nprt]
    Int_t           mcnentr;
-   UChar_t         mcnpart;
+   Int_t           mcnpart;
    Int_t           mcst[40];   //[mcnentr]
    Int_t           mcid[40];   //[mcnentr]
    Int_t           mcpid[40];   //[mcnentr]
@@ -186,8 +186,8 @@ public :
    TBranch        *b_mcvz;   //!
    TBranch        *b_mctof;   //!
 
-   h22Event();
-   virtual ~h22Event();
+   NTupleStructure();
+   virtual ~NTupleStructure();
    virtual void     Init();
    void SetZero();
    void SetGPart(clasEVNT_t *EVNT){ gpart = EVNT->bank.nrow; }
