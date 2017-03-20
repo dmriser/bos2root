@@ -193,7 +193,7 @@ public :
    void SetGPart(clasEVNT_t *EVNT){ gpart = EVNT->bank.nrow; }
 
    void SetCCInformation(clasCCPB_t *CCPB, int index);
-   void SetDCInformation(clasDCPB_t *DCPB, int index);
+   void SetDCInformation(clasDCPB_t *DCPB, clasTBLA_t *TBLA, int index);
    void SetECInformation(clasECPB_t *ECPB, int index);
    void SetSCInformation(clasSCPB_t *SCPB, int index);
    void SetScalarInformation(clasTRGS_t *TRGS); 

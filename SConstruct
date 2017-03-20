@@ -17,4 +17,4 @@ import glob
 #for source in src_list:
 #        env.program(source=[source])
 
-env.program('bos2root22',['bos2root22.cxx','Options.cxx','h22Event.cxx'])
+env.program('bos2root22',['bos2root22.cxx','Options.cxx','NTupleStructure.cxx'])

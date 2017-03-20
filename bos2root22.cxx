@@ -77,8 +77,8 @@ int main(int argc, char *argv[]){
 
         if (fparm_c(command)){
             cout << opts->args["MSG"].args << " Opened bos file for reading: " << opts->ifiles[0] << endl;
-            string ouputFilename = opts->ifiles[0];
-            outputFile.append(".root");
+            string outputFilename = opts->ifiles[0];
+            outputFilename.append(".root");
 
             // Create root tree
             NTupleStructure ntuple;
@@ -98,9 +98,13 @@ int main(int argc, char *argv[]){
 
                 if (HEAD){ type = HEAD->head[0].type; }
 
-                if (type < 0){
-                    cout << opts->args["MSG"] << " Current file is GSIM " << endl;
-                }
+		// scalar event 
+		if (type == 10){
+		  clasTRGS_t *TRGS = (clasTRGS_t *) getGroup(&bcs_, "TRGS", 0);
+
+		  if (TRGS) { ntuple.SetScalarInformation(TRGS); }
+		}
+
 
                 // PART sector 0 generated particles
                 clasPART_t *PART = NULL;
@@ -124,10 +128,16 @@ int main(int argc, char *argv[]){
                         ntuple.SetEVNTInformation(EVNT, i);
 
                         if(CCPB){ ntuple.SetCCInformation(CCPB, i); }
-                        if(DCPB){ ntuple.SetDCInformation(DCPB, i); }
                         if(ECPB){ ntuple.SetECInformation(ECPB, i); }
                         if(SCPB){ ntuple.SetSCInformation(SCPB, i); }
 
+                        if(DCPB){ 
+			  int sec          = DCPB->dcpb[EVNT->evnt[i].dcstat].sctr/100;
+			  clasTBLA_t* TBLA = (clasTBLA_t*) getGroup(&bcs_, "TBLA", sec); 
+
+			  if (TBLA){ ntuple.SetDCInformation(DCPB, TBLA, i); }
+			}
+			
                     }
                 }
 
@@ -147,7 +157,7 @@ int main(int argc, char *argv[]){
             }	// End File Loop
 
             // Write our converted file to disk
-            TFile *outputFile = new TFile(outputFile.c_str(),"recreate");
+            TFile *outputFile = new TFile(outputFilename.c_str(),"recreate");
             outputFile   ->cd();
             ntuple.fChain->Write();
             outputFile   ->Close();

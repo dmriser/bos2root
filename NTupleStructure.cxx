@@ -216,19 +216,36 @@ void NTupleStructure::SetCCInformation(clasCCPB_t *CCPB, int index){
 
 }
 
-void NTupleStructure::SetDCInformation(clasDCPB_t *DCPB, int index){
+void NTupleStructure::SetDCInformation(clasDCPB_t *DCPB, clasTBLA_t *TBLA, int index){
 
     if(dc_point){
         // How do we set tl1_* ?
+      //      tl1_x[index] = TBLA->tbla[dc_point-1].pos.x; 
+      //      tl1_y[index] = TBLA->tbla[dc_point-1].pos.y; 
+      //      tl1_z[index] = TBLA->tbla[dc_point-1].pos.z; 
 
-        tl3_x[index]   = DCPB->dcpb[dc_point-1].x_sc;
-        tl3_y[index]   = DCPB->dcpb[dc_point-1].y_sc;
-        tl3_z[index]   = DCPB->dcpb[dc_point-1].z_sc;
-        tl3_cx[index]  = DCPB->dcpb[dc_point-1].cx_sc;
-        tl3_cy[index]  = DCPB->dcpb[dc_point-1].cy_sc;
-        tl3_cz[index]  = DCPB->dcpb[dc_point-1].cz_sc;
+      int sec = DCPB->dcpb[dc_point-1].sctr/100;
+      int trk = DCPB->dcpb[dc_point-1].sctr%100;
 
-        dc_sect[index] = (Int_t) DCPB->dcpb[dc_point-1].sctr/100;
+      if(TBLA)
+	for(int t=0;t<TBLA->bank.nrow;t++){
+	    int tbla_trk = TBLA->tbla[t].trk_pln/100;
+	    int tbla_pln = TBLA->tbla[t].trk_pln%100;
+	    if(1){ //(tbla_trk == trk && (tbla_pln == 5 || tbla_pln == 18 || tbla_pln == 29)){
+	      tl1_x[index] = TBLA->tbla[t].pos.x;
+	      tl1_y[index] = TBLA->tbla[t].pos.y;
+	      tl1_z[index] = TBLA->tbla[t].pos.z;
+	    }
+	  }
+      
+      tl3_x[index]   = DCPB->dcpb[dc_point-1].x_sc;
+      tl3_y[index]   = DCPB->dcpb[dc_point-1].y_sc;
+      tl3_z[index]   = DCPB->dcpb[dc_point-1].z_sc;
+      tl3_cx[index]  = DCPB->dcpb[dc_point-1].cx_sc;
+      tl3_cy[index]  = DCPB->dcpb[dc_point-1].cy_sc;
+      tl3_cz[index]  = DCPB->dcpb[dc_point-1].cz_sc;
+      
+      dc_sect[index] = (Int_t) DCPB->dcpb[dc_point-1].sctr/100;
     }
 
 }
@@ -318,6 +335,9 @@ void NTupleStructure::SetPARTInformation(clasPART_t *PART){
 }
 
 void NTupleStructure::SetScalarInformation(clasTRGS_t *TRGS){
+
+  // Will be scaled value still. 
+  q_l = TRGS->trgs[0].fcup_g2/1000; 
 
 }
 

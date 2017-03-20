@@ -1,0 +1,2 @@
+Fix the bug where the file gets the entire path
+Add tl1_x, y, z, cx, cy, cz 
