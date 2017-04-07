@@ -54,22 +54,22 @@ void NTupleStructure::Init(){
     b_vx      = fChain->Branch("vx",      vx,       "vx[gpart]/F");
     b_vy      = fChain->Branch("vy",      vy,       "vy[gpart]/F");
     b_vz      = fChain->Branch("vz",      vz,       "vz[gpart]/F");
-    b_dc_sect = fChain->Branch("dc_sect", dc_sect,  "dc_sect[gpart]/I");
+    b_dc_sect = fChain->Branch("dc_sect", dc_sect,  "dc_sect[gpart]/b");
     b_tl1_cx  = fChain->Branch("tl1_cx",  tl1_cx,   "tl1_cx[gpart]/F");
     b_tl1_cy  = fChain->Branch("tl1_cy",  tl1_cy,   "tl1_cy[gpart]/F");
-    b_ec_sect = fChain->Branch("ec_sect", ec_sect,  "ec_sect[gpart]/I");
+    b_ec_sect = fChain->Branch("ec_sect", ec_sect,  "ec_sect[gpart]/b");
     b_ec_r    = fChain->Branch("ec_r",    ec_r,     "ec_r[gpart]/F");
     b_ec_t    = fChain->Branch("ec_t",    ec_t,     "ec_t[gpart]/F");
     b_ec_ei   = fChain->Branch("ec_ei",   ec_ei,    "ec_ei[gpart]/F");
     b_ec_eo   = fChain->Branch("ec_eo",   ec_eo,    "ec_eo[gpart]/F");
     b_etot    = fChain->Branch("etot",    etot,     "etot[gpart]/F");
-    b_cc_sect = fChain->Branch("cc_sect", cc_sect,  "cc_sect[gpart]/I");
+    b_cc_sect = fChain->Branch("cc_sect", cc_sect,  "cc_sect[gpart]/b");
     b_cc_segm = fChain->Branch("cc_segm", cc_segm,  "cc_segm[gpart]/I");
     b_cc_r    = fChain->Branch("cc_r",    cc_r,     "cc_r[gpart]/F");
     b_cc_t    = fChain->Branch("cc_t",    cc_t,     "cc_t[gpart]/F");
     b_nphe    = fChain->Branch("nphe",    nphe,     "nphe[gpart]/I");
     b_cc_c2   = fChain->Branch("cc_c2",   cc_c2,    "cc_c2[gpart]/F");
-    b_sc_sect = fChain->Branch("sc_sect", sc_sect,  "sc_sect[gpart]/I");
+    b_sc_sect = fChain->Branch("sc_sect", sc_sect,  "sc_sect[gpart]/b");
     b_sc_r    = fChain->Branch("sc_r",    sc_r,     "sc_r[gpart]/F");
     b_sc_t    = fChain->Branch("sc_t",    sc_t,     "sc_t[gpart]/F");
     b_edep    = fChain->Branch("edep",    edep,     "edep[gpart]/F");
@@ -231,7 +231,8 @@ void NTupleStructure::SetDCInformation(clasDCPB_t *DCPB, clasTBLA_t *TBLA, int i
 	for(int t=0;t<TBLA->bank.nrow;t++){
 	    int tbla_trk = TBLA->tbla[t].trk_pln/100;
 	    int tbla_pln = TBLA->tbla[t].trk_pln%100;
-	    if(1){ //(tbla_trk == trk && (tbla_pln == 5 || tbla_pln == 18 || tbla_pln == 29)){
+
+	    if( inRange(tbla_pln, 4, 15) ){
 	      tl1_x[index] = TBLA->tbla[t].pos.x;
 	      tl1_y[index] = TBLA->tbla[t].pos.y;
 	      tl1_z[index] = TBLA->tbla[t].pos.z;

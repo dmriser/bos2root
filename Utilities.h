@@ -21,5 +21,8 @@ inline int getPDGFromGEANT(int GEANT){
   return 0; 
 }
 
+template <class T> bool inRange(T value, T min, T max){
+  return (value >= min) && (value <= max);
+}
 
 #endif
